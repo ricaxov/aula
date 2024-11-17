@@ -15,7 +15,7 @@ vector<int> find_string(string const& S, string const& T) {
   int N = size(S), M = size(T);
   auto P = prefix_function(T+"#"+S);
   for (int i = M+1; i <= N+M; i++) {
-    if (P[i] == M) have.emplace_back(i-2*M+1);
+    if (P[i] == M) have.emplace_back(i-2*M);
   }
   return have;
 }
@@ -59,7 +59,7 @@ vector<int> recover_prefix(string const& S) {
   int N = size(S);
   vector<int> have;
   auto P = prefix_function(S);
-  for (int i = N-1; i >= 0; i = P[i]-1) have.emplace_back(i+1);
+  for (int i = N-1; i >= 0; i = P[i]-1) have.emplace_back(i);
   reverse(begin(have), end(have));
   return have;
 }
