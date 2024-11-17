@@ -10,6 +10,15 @@ vector<int> prefix_function(string const& S) {
   }
   return pi;
 }
+vector<int> find_string(string const& S, string const& T) {
+  vector<int> have;
+  int N = size(S), M = size(T);
+  auto P = prefix_function(T+"#"+S);
+  for (int i = M+1; i <= N+M; i++) {
+    if (P[i] == M) have.emplace_back(i-2*M+1);
+  }
+  return have;
+}
 //}}}
 
 // Z Function {{{
@@ -24,8 +33,18 @@ vector<int> z_function(string const& S) {
   }
   return z;
 }
+vector<int> find_string(string const& S, string const& T) {
+  vector<int> have;
+  int N = size(S), M = size(T);
+  auto Z = z_function(T+"#"+S);
+  for (int i = 0; i < N; i++) {
+    if (Z[i+M+1] == M) have.emplace_back(i);
+  }
+  return have;
+}
 //}}}
 
+// CF-432D
 vector<int> count_prefix(string const& S) {
   int N = size(S);
   vector<int> C(N+1, 0);
@@ -42,15 +61,5 @@ vector<int> recover_prefix(string const& S) {
   auto P = prefix_function(S);
   for (int i = N-1; i >= 0; i = P[i]-1) have.emplace_back(i+1);
   reverse(begin(have), end(have));
-  return have;
-}
-
-vector<int> find_string(string const& S, string const& T) {
-  vector<int> have;
-  int N = size(S), M = size(T);
-  auto P = prefix_function(T+"#"+S);
-  for (int i = M+1; i <= N+M; i++) {
-    if (P[i] == M) have.emplace_back(i-2*M+1);
-  }
   return have;
 }
