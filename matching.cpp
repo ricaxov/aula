@@ -19,6 +19,33 @@ vector<int> find_string(string const& S, string const& T) {
   }
   return have;
 }
+vector<int> recover_prefix(string const& S) {
+  int N = size(S);
+  vector<int> have;
+  auto P = prefix_function(S);
+  for (int i = N-1; i >= 0; i = P[i]-1) have.emplace_back(i);
+  reverse(begin(have), end(have));
+  return have;
+}
+int least_rotation(string const& S) {
+  int N = size(S), k = 0;
+  vector<int> f(2*N, -1);
+  
+  for (int j = 1; j < 2*N; j++) {
+    int i = f[j-k-1];
+    while (i != -1 && S[j%N] != S[(k+i+1)%N]) {
+      if (S[j%N] < S[(k+i+1)%N]) k = j-i-1;
+      i = f[i];
+    }
+    if (i == -1 && S[j%N] != S[(k+i+1)%N]) {
+      if (S[j%N] < S[(k+i+1)%N]) k = j;
+      f[j-k] = -1;
+    } else {
+      f[j-k] = i+1;
+    }
+  }
+  return k;
+}
 //}}}
 
 // Z Function {{{
@@ -43,23 +70,3 @@ vector<int> find_string(string const& S, string const& T) {
   return have;
 }
 //}}}
-
-// CF-432D
-vector<int> count_prefix(string const& S) {
-  int N = size(S);
-  vector<int> C(N+1, 0);
-  auto P = prefix_function(S+'#');
-  for (int i = 0; i < N; i++) C[P[i]]++;
-  for (int i = N-1; i > 0; i--) C[P[i-1]] += C[i];
-  for (int i = 0; i <= N; i++) C[i]++;
-  return C;
-}
-
-vector<int> recover_prefix(string const& S) {
-  int N = size(S);
-  vector<int> have;
-  auto P = prefix_function(S);
-  for (int i = N-1; i >= 0; i = P[i]-1) have.emplace_back(i);
-  reverse(begin(have), end(have));
-  return have;
-}
