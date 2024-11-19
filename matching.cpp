@@ -1,4 +1,4 @@
-// Prefix Function {{{
+// KMP {{{
 vector<int> prefix_function(string const& S) {
   int N = size(S);
   vector<int> pi(N, 0);
@@ -48,7 +48,7 @@ int least_rotation(string const& S) {
 }
 //}}}
 
-// Z Function {{{
+// Z {{{
 vector<int> z_function(string const& S) {
   int N = size(S);
   vector<int> z(N);
