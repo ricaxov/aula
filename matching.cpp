@@ -19,14 +19,6 @@ vector<int> find_string(string const& S, string const& T) {
   }
   return have;
 }
-vector<int> recover_prefix(string const& S) {
-  int N = size(S);
-  vector<int> have;
-  auto P = prefix_function(S);
-  for (int i = N-1; i >= 0; i = P[i]-1) have.emplace_back(i);
-  reverse(begin(have), end(have));
-  return have;
-}
 int least_rotation(string const& S) {
   int N = size(S), k = 0;
   vector<int> f(2*N, -1);
